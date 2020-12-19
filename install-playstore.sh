@@ -126,8 +126,8 @@ fi
 if [ ! -d "$COMBINEDDIR" ]; then
   # enable overlay fs
   	if $WITH_SNAP;then
-		$SUDO snap set anbox rootfs-overlay.enable=true
-		$SUDO snap restart anbox.container-manager
+		snap set anbox rootfs-overlay.enable=true
+		snap restart anbox.container-manager
 	else
 		$SUDO cat >/etc/systemd/system/anbox-container-manager.service.d/override.conf<<EOF
 [Service]
@@ -208,7 +208,7 @@ cd "$WORKDIR"
 if [ ! -f ./houdini_y.sfs ]; then
   $WGET -O houdini_y.sfs -q --show-progress $HOUDINI_Y_URL
   mkdir -p houdini_y
-  $SUDO $UNSQUASHFS -f -d ./houdini_y ./houdini_y.sfs
+  $UNSQUASHFS -f -d ./houdini_y ./houdini_y.sfs
 fi
 
 LIBDIR="$OVERLAYDIR/system/lib"
@@ -226,7 +226,7 @@ $SUDO mv "$LIBDIR/arm/libhoudini.so" "$LIBDIR/libhoudini.so"
 if [ ! -f ./houdini_z.sfs ]; then
   $WGET -O houdini_z.sfs -q --show-progress $HOUDINI_Z_URL
   mkdir -p houdini_z
-  $SUDO $UNSQUASHFS -f -d ./houdini_z ./houdini_z.sfs
+  $UNSQUASHFS -f -d ./houdini_z ./houdini_z.sfs
 fi
 
 LIBDIR64="$OVERLAYDIR/system/lib64"
@@ -304,7 +304,7 @@ echo "ro.opengles.version=131072" | $SUDO tee -a "$OVERLAYDIR/system/build.prop"
 echo "Restart anbox"
 
 if $WITH_SNAP;then
-	$SUDO snap restart anbox.container-manager
+	snap restart anbox.container-manager
 else
 	$SUDO systemctl restart anbox-container-manager.service
 fi
